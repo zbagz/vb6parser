@@ -12,6 +12,7 @@ import io.proleap.vb6.VbTestBase;
 import io.proleap.vb6.asg.metamodel.ClazzModule;
 import io.proleap.vb6.asg.metamodel.Program;
 import io.proleap.vb6.asg.metamodel.StandardModule;
+import io.proleap.vb6.asg.metamodel.Variable;
 import io.proleap.vb6.asg.metamodel.statement.enumeration.Enumeration;
 import io.proleap.vb6.asg.metamodel.statement.enumeration.EnumerationConstant;
 import io.proleap.vb6.asg.metamodel.statement.function.Function;
@@ -32,7 +33,7 @@ public class TestA extends VbTestBase {
 
         final Program program = new VbParserRunnerImpl().analyzeFiles(Arrays.asList(clsTestInputFile,
                 modGeneralInputFile, clsSoundInputFile)); // note the exact order
-
+        
         {
             final ClazzModule clsSound = program.getClazzModule("clsSound");
             assertNotNull(clsSound);
@@ -48,8 +49,14 @@ public class TestA extends VbTestBase {
                 assertNotNull(Sound_Stop);
                 assertEquals(0, Sound_Stop.getFunctionCalls().size());
             }
-        }
 
+            {
+                final Variable cmdPlay = clsSound.getVariable("cmdPlay");
+                assertNotNull(cmdPlay);
+                assertEquals(0, cmdPlay.getVariableCalls().size());
+            }
+        }
+        
         {
             final StandardModule modGeneral = program.getStandardModule("modGeneral");
             assertNotNull(modGeneral);
@@ -68,6 +75,12 @@ public class TestA extends VbTestBase {
                     final EnumerationConstant Sound_Stop = eSoundAction.getEnumerationConstant("Sound_Stop");
                     assertNotNull(Sound_Stop);
                     assertEquals(1, Sound_Stop.getEnumerationConstantCalls().size());
+                }
+
+                {
+                    final EnumerationConstant cmdPlay = eSoundAction.getEnumerationConstant("cmdPlay");
+                    assertNotNull(cmdPlay);
+                    assertEquals(4, cmdPlay.getEnumerationConstantCalls().size());
                 }
             }
         }
