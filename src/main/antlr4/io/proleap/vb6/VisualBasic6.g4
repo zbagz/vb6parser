@@ -2080,12 +2080,12 @@ WS
 // letters
 
 fragment LETTER
-   : [a-zA-Z_äöüÄÖÜ]
+   : [a-zA-Z_äöüñÄÖÜÑ]
    ;
 
 
 fragment LETTERORDIGIT
-   : [a-zA-Z0-9_äöüÄÖÜ]
+   : [a-zA-Z0-9_äöüñÄÖÜÑ]
    ;
 
 // case insensitive chars
